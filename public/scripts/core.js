@@ -1,6 +1,5 @@
 const axios = require('axios');
-
-import { API_KEY } from './cmc.js';
+const API_KEY = require('./cmc.js');
 
 axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
   params: {
