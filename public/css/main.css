@@ -27,11 +27,34 @@ html, .body {
   box-shadow: 0 0 5px 0 #000;
 }
 
-.mainBlock h1 {
+.mainBlock > * {
   margin: 0;
-  padding: 0;
+  margin-bottom: 10px;
+  padding: 5px 0 5px 0;
+  background-color: #4a3959;
+  font-family: Raleway;
+  user-select: none;
+  //border-radius: 10px;
+  border-radius: 100px;
+  box-shadow: -1px -1px 1px 0 #6b5380, 1px 1px 1px 0 #382945;
+}
+
+.mainBlock h1 {
   color: #3e2f4a;
-  font-size: 24px;
+  font-size: 30px;
   font-family: Electronica;
   user-select: none;
+  background-color: #4a3959;
+}
+
+
+
+.searchBlock {
+  box-shadow: inset -1px -1px 1px 0 #6b5380, inset 1px 1px 1px 0 #382945;
+}
+
+.searchBlock > input {
+  outline: none;
+  border: none;
+  background-color: #4a3959;
 }
