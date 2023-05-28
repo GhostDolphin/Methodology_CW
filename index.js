@@ -5,32 +5,43 @@ const API_KEY = require('./public/scripts/cmc.js');
 const express = require('express');
 const app = express();
 
+const bodyParser = require('body-parser');
 const axios = require('axios');
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
+  res.render('index');
+});
+
+app.post('/crypto', (req, res) => {
+  const { symbol } = req.body;
+
   axios
-    .get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
+    .get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/map', {
       params: {
-        start: 1,
-        limit: 10,
-        convert: 'USD',
-        sort: 'market_cap',
-        sort_dir: 'desc'
+        symbol: symbol
       },
       headers: {
         'X-CMC_PRO_API_KEY': API_KEY
       }
     })
     .then(response => {
-      const crypto = response.data.data;
-      res.render('index', { crypto });
+      const cryptocurrency = response.data.data[0];
+
+      if (cryptocurrency) {
+        const { id, symbol, rank } = cryptocurrency;
+
+        res.json({ id, symbol, rank });
+      } else {
+        res.json({ error: 'Cryptocurrency not found.' });
+      }
     })
     .catch(error => {
       console.error(error);
-      res.status(500).send('Error occurred');
+      res.json({ error: 'Error occurred.' });
     });
 });
 

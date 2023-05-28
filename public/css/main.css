@@ -37,7 +37,7 @@ html, .body {
 
 .mainBlock {
   margin: 0;
-  padding: 30px 5px 30px 5px;
+  padding: 0 5px 0 5px;
   text-align: center;
   color: #413963;
   font-family: Montserrat;
@@ -49,7 +49,7 @@ html, .body {
 }
 
 .mainBlock h1 {
-  margin: 0 0 30px 0;
+  margin: 30px 0 30px 0;
   padding: 0;
   color: #fff;
   text-shadow: 0 0 3px #fff;
@@ -98,8 +98,13 @@ html, .body {
 
 .assetBlock .cryptoName {
   padding: 0 5px 0 5px;
+  text-align: left;
   color: #fff;
   text-shadow: 0 0 3px #fff;
+}
+
+.assetBlock .assetSize {
+  width: 50%;
 }
 
 .assetBlock .delBtn {
@@ -116,55 +121,35 @@ html, .body {
   width: 100%;
 }
 
-.searchBlock .field {
-  padding-right: 2.5px;
-  width: auto;
-}
-
-.searchBlock .searchBtn {
-  padding: 0 2.5px 0 2.5px;
-  width: 14%;
-}
-
-.searchBlock .addBtn {
-  padding-left: 2.5px;
-  width: 14%;
-}
-
 .searchBlock td {
-  box-sizing: border-box;
-}
-
-
-
-.budgetBlock {
-  margin: 0;
-  padding: 5px;
-  border-spacing: 0;
-  width: 100%;
-}
-
-.budgetBlock td {
   padding: 0 2.5px 0 2.5px;
   box-sizing: border-box;
 }
 
-.budgetBlock .download {
+.searchBlock .smartBtn {
   padding: 0 2.5px 0 0;
   width: 14%;
 }
 
-.budgetBlock .countBtn {
+.searchBlock .countBtn {
   width: 14%;
 }
 
-.budgetBlock .smartBtn {
-  padding: 0 0 0 2.5px;
+.searchBlock .field {
+  width: auto;
+}
+
+.searchBlock .searchBtn {
   width: 14%;
 }
-.budgetBlock .smartOn {
-  color: #fff;
-  text-shadow: 0 0 1px #fff;
+
+.searchBlock .addBtn {
+  width: 14%;
+}
+
+.searchBlock .download {
+  padding: 0 0 0 2.5px;
+  width: 14%;
 }
 
 
@@ -177,11 +162,17 @@ html, .body {
   background-position: 50% 50%;
   border-radius: 50%;
   box-shadow: inset 1px 1px 1px 0 rgba(219,240,255,1), inset -1px -1px 1px 0 rgba(103,107,217,1);
+  box-sizing: border-box;
   cursor: pointer;
   transition: box-shadow .125s ease;
 }
 .iconBtn:active {
   box-shadow: inset -1px -1px 1px 0 rgba(219,240,255,1), inset 1px 1px 1px 0 rgba(103,107,217,1);
+}
+
+.iconBtn.lightOn {
+  color: #fff;
+  text-shadow: 0 0 1px #fff;
 }
 
 
