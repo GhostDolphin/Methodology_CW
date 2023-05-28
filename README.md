@@ -43,3 +43,14 @@ $ npm test
 
 >How to use app
 
+![App Visuals](https://i.imgur.com/ZsxghK7.png)
+
+As you can see there are lots of buttons all over the page. Let's discuss each one of them:
+
+`1. Plus (+) Button`: This the first button you'll be able to use right upon loading the page. There is a text field right next to it, where you have to input whatever coin's symbol (e.g. BTC) you'd like. After it's done, just press the plus button and new asset will appear on top.
+
+`2. Remove (Trash) Button`: This button is used if you for some reason want to delete corresponding asset.
+
+`3. Calculator Button`: This one is meant to calculate your custom assets allocation by percentages. As you can see there are text fields at every single asset and they contain the percentage for a certain asset.
+
+`!!!` All the other buttons are currently unavailable for use and are planned to be developed later.
