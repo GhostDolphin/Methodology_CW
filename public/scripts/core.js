@@ -4,6 +4,7 @@ smartMode = false;
 const searchBtn = document.querySelector('#searchBtn'),
 resultDiv = document.querySelector('#assets'),
 countBtn = document.querySelector('#countBtn'),
+smartBtn = document.querySelector('#smartBtn'),
 downloadBtn = document.querySelector('#downloadBtn'),
 uploadBtn = document.querySelector('#uploadBtn'),
 fileInput = document.querySelector('#fileInput');
@@ -11,12 +12,30 @@ fileInput = document.querySelector('#fileInput');
 const countAlloc = (arr, smart) => {
   let result = [];
 
-  if (smart) {
-    // To be done
-    console.log('');
-  } else {
-    const noChange = arr.filter(obj => obj.changed);
+  const noChange = arr.filter(obj => obj.changed);
 
+  if (smart) {
+    const maxRank = arr.reduce((max, obj) => obj.changed === true ? max : Math.max(max, obj.rank), 0),
+    totalRank = arr.reduce((sum, obj) => obj.changed === true ? sum : sum + (maxRank - obj.rank), 0);
+
+    result = arr.map(obj => {
+        if (obj.changed === true) {
+            return obj;
+        } else {
+            let percent = (maxRank - obj.rank) / totalRank;
+
+            percent = Math.floor(Math.max(1, Math.min(50, percent * 100)));
+            
+            return {...obj, percent};
+        }
+    });
+
+    const highestRankObj = result.reduce((minObj, obj) => obj.rank < minObj.rank ? obj : minObj, {rank: Infinity}),
+    totalPercent = result.reduce((sum, obj) => sum + obj.percent, 0);
+
+    if (totalPercent < 100)
+        highestRankObj.percent += 100 - totalPercent;
+  } else {
     let reserve = 0;
     if (noChange.length > 0) {
       for (const obj of noChange)
@@ -105,6 +124,16 @@ function fetchCryptoData(symbol) {
       console.error(error);
     });
 }
+
+smartBtn.addEventListener('click', () =>  {
+  if (!smartMode) {
+    smartMode = true;
+    smartBtn.classList.add('lightOn');
+  } else {
+    smartMode = false;
+    smartBtn.classList.remove('lightOn');
+  }
+});
 
 countBtn.addEventListener('click', () => {
   if (portfolio.length > 1) {

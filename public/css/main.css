@@ -164,7 +164,7 @@ html, .body {
   box-shadow: inset 1px 1px 1px 0 rgba(219,240,255,1), inset -1px -1px 1px 0 rgba(103,107,217,1);
   box-sizing: border-box;
   cursor: pointer;
-  transition: box-shadow .125s ease;
+  transition: box-shadow .125s ease, color .2s ease, text-shadow .2s ease;
 }
 .iconBtn:active {
   box-shadow: inset -1px -1px 1px 0 rgba(219,240,255,1), inset 1px 1px 1px 0 rgba(103,107,217,1);
