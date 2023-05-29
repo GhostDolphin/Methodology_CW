@@ -92,7 +92,7 @@ function fetchCryptoData(symbol) {
                       ${data.symbol}
                     </td>
                     <td class="assetSize">
-                      <input id="alloc${data.id}" class="assetInput" type="text" inputmode="numeric" pattern="[0-9]*" name="assetSize" placeholder="Allocation %" />
+                      <input id="alloc${data.id}" class="assetInput" type="text" inputmode="numeric" pattern="[0-9]*" name="assetSize" placeholder="Allocation %" ${smartMode ? 'readonly' : ''} />
                     </td>
                     <td class="delBtn">
                       <div id="del${data.id}" class="iconBtn" onclick="removeParent(event, ${data.id})">
@@ -126,19 +126,27 @@ function fetchCryptoData(symbol) {
 }
 
 smartBtn.addEventListener('click', () =>  {
+  const allInputs = document.querySelectorAll('.assetInput');
   if (!smartMode) {
     smartMode = true;
     smartBtn.classList.add('lightOn');
+    countBtn.classList.add('noUse');
+
+    for (const input of allInputs)
+      input.readOnly = true;
   } else {
     smartMode = false;
     smartBtn.classList.remove('lightOn');
+    countBtn.classList.remove('noUse');
+
+    for (const input of allInputs)
+      input.readOnly = false;
   }
 });
 
 countBtn.addEventListener('click', () => {
-  if (portfolio.length > 1) {
+  if (portfolio.length > 1 && !smartMode) {
     const allInputs = document.querySelectorAll('.assetInput');
-    
     for (const input of allInputs) {
       const inputId = parseInt(input.id.replace('alloc', ''));
       const asset = portfolio.find(obj => obj.id === inputId);
