@@ -3,14 +3,17 @@ smartMode = false;
 
 const searchBtn = document.querySelector('#searchBtn'),
 resultDiv = document.querySelector('#assets'),
-countBtn = document.querySelector('#countBtn');
+countBtn = document.querySelector('#countBtn'),
+downloadBtn = document.querySelector('#downloadBtn'),
+uploadBtn = document.querySelector('#uploadBtn'),
+fileInput = document.querySelector('#fileInput');
 
 const countAlloc = (arr, smart) => {
   let result = [];
 
   if (smart) {
     // To be done
-    console.log('')
+    console.log('');
   } else {
     const noChange = arr.filter(obj => obj.changed);
 
@@ -109,13 +112,18 @@ countBtn.addEventListener('click', () => {
     
     for (const input of allInputs) {
       const inputId = parseInt(input.id.replace('alloc', ''));
-      console.log(input.id.replace('alloc', ''));
-
       const asset = portfolio.find(obj => obj.id === inputId);
 
       if (parseInt(input.value) !== asset.percent) {
-        asset.changed = true;
-        asset.percent = parseInt(input.value);
+        let allPercents = 0;
+        for (const obj of portfolio)
+          allPercents += obj.percent;
+
+        allPercents = allPercents - asset.percent + parseInt(input.value);
+        if (allPercents <= 100) {
+          asset.changed = true;
+          asset.percent = parseInt(input.value);
+        }
       }
     }
 
@@ -126,6 +134,66 @@ countBtn.addEventListener('click', () => {
       allocDiv.value = obj.percent;
     }
   }
+});
+
+uploadBtn.addEventListener('click', () => {
+  fileInput.click();
+});
+
+fileInput.addEventListener('change', e => {
+  const file = e.target.files[0],
+  reader = new FileReader();
+
+  reader.onload = event => {
+    portfolio = JSON.parse(event.target.result);
+
+    resultDiv.innerHTML = '';
+    for (const asset of portfolio)
+      resultDiv.innerHTML += `
+        <div id="asset${asset.id}" class="tableEffect">
+          <table class="assetBlock">
+            <tbody>
+              <tr>
+                <td class="cryptoIcon">
+                  <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/${asset.id}.png" />
+                </td>
+                <td class="cryptoName">
+                  ${asset.symbol}
+                </td>
+                <td class="assetSize">
+                  <input id="alloc${asset.id}" class="assetInput" type="text" inputmode="numeric" pattern="[0-9]*" name="assetSize" placeholder="Allocation %" value="${asset.hasOwnProperty('percent') ? asset.percent : ''}" />
+                </td>
+                <td class="delBtn">
+                  <div id="del${asset.id}" class="iconBtn" onclick="removeParent(event, ${asset.id})">
+                    <i class="fa-solid fa-trash"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+
+
+  };
+
+  reader.readAsText(file);
+});
+
+downloadBtn.addEventListener('click', () => {
+  const jsonString = JSON.stringify(portfolio, null, 2),
+  blob = new Blob([jsonString], { type: 'application/json' }),
+  url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'data.json';
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+
+  URL.revokeObjectURL(url);
+  document.body.removeChild(a);
 });
 
 function removeParent(event, id) {
