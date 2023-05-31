@@ -6,6 +6,8 @@
 
 This is a web application, which allows user to automatically calculate and arrange their crypto portfolio by choosing what exact assets they want to focus on.
 
+[Design Document](https://docs.google.com/document/d/1qTXoBrBbpgwAU6cPZunpx8vxrtGElp7rogXWheeE45A/edit?usp=sharing)
+
 >Instructions
 
 Follow these steps to compile and launch project:
